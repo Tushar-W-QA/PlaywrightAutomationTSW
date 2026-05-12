@@ -19,10 +19,22 @@ await passwordInputBox.fill("Test@123")
 const loginButton = page.locator("input[id*='login']");
 await loginButton.click();
 
-// Cart
+
+// Wait the networks api to fully loaded
+// await page.waitForLoadState('networkidle');
+
+
+// all product displayed
+const cartTitle = page.locator("//div[@class='card-body']/h5/b");
+await cartTitle.nth(0).waitFor() // wait for page loading
+const nameAllCart = await cartTitle.allTextContents()
+console.log(nameAllCart)
+
+
+/* // Cart
 const cartTitle = page.locator("//div[@class='card-body']/h5/b");
 const singleCartName = await cartTitle.nth(2).textContent();
 console.log(singleCartName);
-
+*/
 
 })

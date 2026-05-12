@@ -37,6 +37,13 @@ test.only('UI Basic Test', async ({browser}) =>
     await usernameInputBox.fill("rahulshettyacademy"); // This will add new record/data
     await passwordInputBox.fill(""); // This will clear existing data
     await passwordInputBox.fill("Learning@830$3mK2"); // This will add new record/data
+
+    await page.locator("//span[@class='checkmark']").nth(1).click();
+    await page.locator("//button[@id='okayBtn']").click();
+    await page.locator("select.form-control").selectOption("teach");
+
+    await page.pause();
+
     await signInButton.click() // it will click on sign in button
 
     //console.log(await page.locator(".card-body a").first().textContent());
