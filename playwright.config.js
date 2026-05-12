@@ -24,7 +24,7 @@ const config = ({
 
   // Use : It is used for which specific browser, we want to execute/run the scenario
   use: {
-    browserName: 'webkit',
+    browserName: 'chromium',
     headless: false
   },
 

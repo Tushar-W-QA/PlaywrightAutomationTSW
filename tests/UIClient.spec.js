@@ -1,0 +1,28 @@
+const{test} = require('@playwright/test');
+
+
+test('Verify the client website', async ({browser})=>{
+
+const context = await browser.newContext();
+const page = await context.newPage();
+await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
+
+
+// Email
+const emailInputBox = page.locator("input[id='userEmail']");
+await emailInputBox.fill("tusharwarad2929@gmail.com");
+
+const passwordInputBox = page.locator("input[id='userPassword']");
+await passwordInputBox.fill("Test@123")
+
+// LoginButton
+const loginButton = page.locator("input[id*='login']");
+await loginButton.click();
+
+// Cart
+const cartTitle = page.locator("//div[@class='card-body']/h5/b");
+const singleCartName = await cartTitle.nth(2).textContent();
+console.log(singleCartName);
+
+
+})
