@@ -68,7 +68,7 @@ test('UI Basic Test', async ({browser}) =>
 
 });
 
-test.only('Page Fixture UI Basic Test', async({page})=>
+test('Page Fixture UI Basic Test', async({page})=>
     {
 
 
@@ -95,11 +95,33 @@ test.only('Page Fixture UI Basic Test', async({page})=>
     expect(page.locator("input[id='terms']").isChecked()).toBeTruthy();
     await expect(interviewnBlinkLink).toHaveAttribute("class","blinkingText");
     await expect(techSmartBlinklink).toHaveAttribute("class","blinkingText")
-
-
-
-
-
     // await signInButton.click()
 
+    });
+
+    test.only('Page Child Window Verification', async({browser})=>
+    {
+
+        const context = await browser.newContext();
+        const page = await context.newPage();
+        const interviewLink = page.locator("a[href*='documents-request']")
+        await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+
+        const [interviewPage] = await Promise.all([
+            context.waitForEvent('page'),
+            interviewLink.click()
+        ]);
+
+        const text = await interviewPage.locator("p.red").textContent();
+        console.log(text);
+
+        const arrayText = text.split("@");
+        const domain1 = arrayText[1].split(" ")[0];
+        console.log(domain1);
+
+        await page.locator("#username").fill(domain1);
+        await page.pause()
+
+        
+ 
     });
