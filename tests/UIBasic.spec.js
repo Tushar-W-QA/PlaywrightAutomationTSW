@@ -2,7 +2,7 @@ const {test, expect} = require('@playwright/test');
 
 
 // If we want explicitly add special to inject in any browser then we will use browser fixture which is global variable.
-test.only('UI Basic Test', async ({browser}) =>
+test('UI Basic Test', async ({browser}) =>
 {
    //  chrome - plugin or cookies
     const context = await browser.newContext();
@@ -40,9 +40,13 @@ test.only('UI Basic Test', async ({browser}) =>
 
     await page.locator("//span[@class='checkmark']").nth(1).click();
     await page.locator("//button[@id='okayBtn']").click();
-    await page.locator("select.form-control").selectOption("teach");
 
-    await page.pause();
+    await expect(page.locator("//span[@class='checkmark']").nth(1)).toBeChecked();
+    const booleanCheckBox = await page.locator("//span[@class='checkmark']").nth(1).isChecked();
+    console.log(booleanCheckBox);
+
+    await page.locator("select.form-control").selectOption("teach");
+    //await page.pause();
 
     await signInButton.click() // it will click on sign in button
 
@@ -64,11 +68,38 @@ test.only('UI Basic Test', async ({browser}) =>
 
 });
 
-test('Page Fixture UI Basic Test', async({page})=>
+test.only('Page Fixture UI Basic Test', async({page})=>
     {
-        await page.goto("https://youtube.com");
-        console.log(await page.title());
 
-        await expect(page).toHaveTitle("YouTube");
+
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const usernameInputBox = page.locator("#username");
+    const passwordInputBox = page.locator("[name='password']");
+    const signInButton =  page.locator("#signInBtn");
+    const interviewnBlinkLink = page.locator("a[href*='documents-request']");
+    const techSmartBlinklink = page.locator("a[href*='smarthire']");
+
+    await usernameInputBox.fill("rahulshettyacademy"); // This will add new record/data
+    await passwordInputBox.fill("Learning@830$3mK2"); // This will add new record/data
+
+    await page.locator("//span[@class='checkmark']").nth(1).click();
+    await page.locator("//button[@id='okayBtn']").click();
+
+    await expect(page.locator("//span[@class='checkmark']").nth(1)).toBeChecked();
+    const booleanRadioButton = await page.locator("//span[@class='checkmark']").nth(1).isChecked();
+    console.log(booleanRadioButton);
+    await page.locator("select.form-control").selectOption("teach");
+    await page.locator("input[id='terms']").click()
+    await expect(page.locator("input[id='terms']")).toBeChecked();
+    await page.locator("input[id='terms']").uncheck();
+    expect(page.locator("input[id='terms']").isChecked()).toBeTruthy();
+    await expect(interviewnBlinkLink).toHaveAttribute("class","blinkingText");
+    await expect(techSmartBlinklink).toHaveAttribute("class","blinkingText")
+
+
+
+
+
+    // await signInButton.click()
 
     });
