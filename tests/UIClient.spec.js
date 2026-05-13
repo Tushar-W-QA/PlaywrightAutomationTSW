@@ -85,7 +85,31 @@ await expect(orderMsg).toHaveText(" Thankyou for the order. ")
 
 const orderId = await page.locator("label.ng-star-inserted").textContent();
 console.log(orderId);
-// await page.pause();
+
+await page.locator("button[routerlink*='myorders']").click();
+
+// tbody tr
+
+await page.locator("tbody tr").nth(0).waitFor();
+const allOrders = await page.locator("tbody tr");
+const orderIdCount = await page.locator("tbody tr").count();
+console.log(orderIdCount);
+
+for (let i=0; i < orderIdCount; ++i)
+{
+    const text = await allOrders.nth(i).locator("th").textContent();
+    if(orderId.includes(text))
+    {
+        await allOrders.nth(i).locator("button:has-text('View')").click();
+        break;
+    }
+}
+
+const orderIdDetailPage = await page.locator("div.col-text").textContent();
+await expect(orderId.includes(orderIdDetailPage)).toBeTruthy();
+
+
+await page.pause();
 
 
 
