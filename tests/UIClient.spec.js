@@ -79,8 +79,13 @@ for(let i=0; i<dropdownOptionList; ++i){
         break;
     }
 }
-//await page.locator("a.action__submit").click();
-await page.pause();
+await page.locator("a.action__submit").click();
+const orderMsg = await page.locator(".hero-primary");
+await expect(orderMsg).toHaveText(" Thankyou for the order. ")
+
+const orderId = await page.locator("label.ng-star-inserted").textContent();
+console.log(orderId);
+// await page.pause();
 
 
 
