@@ -1,4 +1,4 @@
-const{test} = require('@playwright/test');
+const{test, expect} = require('@playwright/test');
 
 
 test('Verify the client website', async ({browser})=>{
@@ -46,7 +46,40 @@ for (let i=0; i < productCount; ++i)
         break;
     }
 }
+await page.locator("[routerlink*='cart']").click();
+await page.locator("div li").nth(0).waitFor();
+const visibleCheck = page.locator("h3:has-text('iphone 13 pro')").isVisible();
+await expect(visibleCheck).toBeTruthy();
 
+await page.locator("button:has-text('Checkout')").click();
+await page.locator("//input[@type='text' and @class='input txt text-validated']").fill("1234 5678 9123 4567");
+await page.locator(".ddl").nth(0).selectOption("07");
+await page.locator(".ddl").nth(1).selectOption("14");
+await page.locator("//input[@type='text' and @class='input txt']").nth(0).fill("04/28");
+await page.locator("//input[@type='text' and @class='input txt']").nth(1).fill("Tushar Suryakant Warad");
+await page.locator("input[name='coupon']").fill("rahulshettyacademy");
+await page.locator("button.mt-1").click();
+
+const couponMsg = page.locator("p.ng-star-inserted");
+await expect(couponMsg).toHaveText("* Coupon Applied");
+
+await expect(page.locator("input[type='text']").nth(4)).toHaveValue("tusharwarad2929@gmail.com");
+
+await page.locator("[placeholder*='Country']").pressSequentially("au",{delay:50});
+const dropdown = page.locator(".ta-results")
+await dropdown.waitFor()
+const dropdownOptionList = await dropdown.locator("button").count();
+
+for(let i=0; i<dropdownOptionList; ++i){
+
+    const country = await dropdown.locator("button").nth(i).textContent();
+    if(country.trim() === "Macau")
+    {
+        await dropdown.locator("button").nth(i).click();
+        break;
+    }
+}
+//await page.locator("a.action__submit").click();
 await page.pause();
 
 
