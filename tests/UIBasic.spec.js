@@ -117,10 +117,11 @@ test('Page Fixture UI Basic Test', async({page})=>
 
         const arrayText = text.split("@");
         const domain1 = arrayText[1].split(" ")[0];
-        console.log(domain1);
+        //console.log(domain1);
 
         await page.locator("#username").fill(domain1);
-        await page.pause()
+        console.log(await page.locator("#username").inputValue())
+        await page.pause();
 
         
  

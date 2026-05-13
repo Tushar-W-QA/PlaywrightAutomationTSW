@@ -26,15 +26,32 @@ await loginButton.click();
 
 // all product displayed
 const cartTitle = page.locator("//div[@class='card-body']/h5/b");
+await page.waitForLoadState('networkidle');
 await cartTitle.nth(0).waitFor() // wait for page loading
 const nameAllCart = await cartTitle.allTextContents()
 console.log(nameAllCart)
 
 
-/* // Cart
-const cartTitle = page.locator("//div[@class='card-body']/h5/b");
-const singleCartName = await cartTitle.nth(2).textContent();
-console.log(singleCartName);
-*/
+const product = page.locator(".card-body");
+const productTitle = "iphone 13 pro";
+
+const productCount = await product.count();
+console.log(productCount);
+
+for (let i=0; i < productCount; ++i)
+{
+    if (await product.nth(i).locator("b").textContent() === productTitle)
+    {
+        await product.nth(i).locator("text=Add To Cart").click();
+        break;
+    }
+}
+
+await page.pause();
+
+
+
+
+
 
 })
