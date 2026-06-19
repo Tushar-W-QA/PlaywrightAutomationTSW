@@ -9,6 +9,4 @@ test('Verify the blink/hyperlink is working', async ({page})=> {
     await expect(interviewnBlinkLink).toHaveAttribute("class", "blinkingText");
     await expect(techSmartBlinklink).toHaveAttribute("class", "blinkingText");
 
-
-
 })
