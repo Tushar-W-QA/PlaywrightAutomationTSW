@@ -109,7 +109,7 @@ const orderIdDetailPage = await page.locator("div.col-text").textContent();
 await expect(orderId.includes(orderIdDetailPage)).toBeTruthy();
 
 
-await page.pause();
+//await page.pause();
 
 
 

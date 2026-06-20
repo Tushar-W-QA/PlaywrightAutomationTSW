@@ -25,6 +25,4 @@ test("Verify the calender validation", async ({page}) =>{
         expect(values).toEqual(dateList[i]);
     }
 
-    
-
 });

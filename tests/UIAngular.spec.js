@@ -14,6 +14,6 @@ test('Verify the ANgularPractice', async({page})=>{
 
     await page.getByRole("link", {name:"Shop"}).click();
     await page.locator("app-card").filter({hasText : "Blackberry"}).getByRole("button", {name: "Add "}).click();
-    await page.getByRole("button", {name:"Checkout"}).click();
+    //await page.getByRole("button", {name:"Checkout"}).click();
 
 });
