@@ -61,30 +61,19 @@ await page.getByText("PLACE ORDER").click();
 
 await expect(page.getByText(" Thankyou for the order. ")).toBeVisible();
 
-// const orderId = await page.locator("label.ng-star-inserted").textContent();
-// console.log(orderId);
+const orderId = await page.locator("label.ng-star-inserted").textContent();
+console.log(orderId);
+const id = orderId.split("|")[1].trim();
 
-// await page.locator("button[routerlink*='myorders']").click();
+await page.getByRole("button",{name:'  ORDERS'}).click();
 
-// // tbody tr
+// tbody tr
+// 6a360ef817ee3e78baef1dcd
+await page.locator("tbody tr").nth(0).waitFor();
+await page.locator("tbody tr").filter({hasText:id.trim()}).getByRole("button",{name:'View'}).click();
 
-// await page.locator("tbody tr").nth(0).waitFor();
-// const allOrders = await page.locator("tbody tr");
-// const orderIdCount = await page.locator("tbody tr").count();
-// console.log(orderIdCount);
-
-// for (let i=0; i < orderIdCount; ++i)
-// {
-//     const text = await allOrders.nth(i).locator("th").textContent();
-//     if(orderId.includes(text))
-//     {
-//         await allOrders.nth(i).locator("button:has-text('View')").click();
-//         break;
-//     }
-// }
-
-// const orderIdDetailPage = await page.locator("div.col-text").textContent();
-// await expect(orderId.includes(orderIdDetailPage)).toBeTruthy();
+const orderIdDetailPage = await page.locator("div.col-text").textContent();
+await expect(orderId.includes(orderIdDetailPage)).toBeTruthy();
 
 
 await page.pause();
